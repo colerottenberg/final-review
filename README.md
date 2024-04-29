@@ -12,6 +12,15 @@ This is the documentation for the final review of Digital Design. The final exam
 
 
 ## Pipeline/Optimization
+Pipelining is the process of breaking down a task into smaller tasks that can be executed in parallel. This is often used in a CPU to increase the throughput of the CPU.
+**Latency**: The time it takes to complete a task.
+**Throughput**: The number of tasks that can be completed in a given time.
+**Speedup**: The ratio of the time it takes to complete a task without pipelining to the time it takes to complete a task with pipelining.
+
+### Speedup
+To find the speedup of a pipeline, we can use the following formula:
+$$Speedup = \frac{n * k}{n + k - 1}$$
+Where: n is the number of tasks, and k is the number of stages. Or k is the pipeline depth and n is the number of tasks.
 
 ## Timing/Protocols
 
@@ -150,5 +159,15 @@ Bit-Slicing is a method to increase the word size of a memory module. Banking is
 This just involves the usage of both those methods in tandem.
 
 ## Verification
+Verification is the process of checking the functional correctness of a design. Making sure implementation matches the specification. To ensure that the result of some transformation is correct.
+
+**Testing** verifies the manufactruing process not the functional correctness of the design.
+
+**Verification Complexity** scales insanely quickly leaving us with few ways to verify all possible states. This is why we use formal verification.
+
+### Reducing Verification Complexity
+- Using pre-defined and verified components
+- Block (IP) based design
+- Platform based design
 
 ## Miscellaneous
