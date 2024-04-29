@@ -76,9 +76,8 @@ begin
 end impl;
 ```
 
-#### Multilevel Bus Architecture
+#### [Multilevel Bus Architecture](https://github.com/colerottenberg/final-review/blob/main/EEL4712-Spring-2024-05-Integration.pdf#page=21) on page 21 of the EEL4712-Spring-2024-05-Integration.pdf
 We wouldn't want a single bus to connect all the clients. Instead, we would want to use a multilevel bus architecture. This is where we have a bus connecting a few clients, and then another bus connecting the buses. This is often used in a hierarchical system.
-
 
 ## Memory
 
