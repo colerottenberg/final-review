@@ -33,6 +33,52 @@ This is the documentation for the final review of Digital Design. The final exam
 
 **UART Protocol** is a protocol that uses a start bit, data bits, a parity bit, and a stop bit. The start bit is used to indicate the beginning of the data frame. The start bit involves pulling the signal low for a certain amount of time which sets the time for the clock. The data bits are the actual data being sent. There are often 8 data bits. The parity bit is used to check for errors in the data. The parity bit is often set to 0 if there are an even number of 1's in the data, and 1 if there are an odd number of 1's in the data. This type of parity is called ***even parity***. The stop bit is used to indicate the end of the data frame. The stop bit is often set to 1.
 ## Interconnects/Buses/Crossbars/Arbitration
+### Interconnects
+Used when many clients need to communicate. Ad-hoc point-to-point wiring or shared interconnects. Like a telephone exchange.
+
+### Buses
+
+**VHDL Bus**
+```vhdl
+-- Combinational Bus Interface
+-- t (transmit) and r (receive) in signal names are from the
+-- perspective of the bus
+library ieee;
+use ieee.std_logic_1164.all;
+entity BusInt is
+  generic( aw: integer := 2; -- address width
+    dw: integer := 4 ); -- data width
+  port( cr_valid, arb_grant, bt_valid: in std_logic;
+    cr_ready, ct_valid, arb_req, br_valid: out std_logic;
+    cr_addr, bt_addr, my_addr: in std_logic_vector(aw-1 downto 0);
+    br_addr: out std_logic_vector(aw-1 downto 0);
+    cr_data, bt_data: in std_logic_vector(dw-1 downto 0);
+    br_data, ct_data: out std_logic_vector(dw-1 downto 0) );
+end BusInt;
+
+architecture impl of BusInt is
+begin
+  -- arbitration
+  arb_req <= cr_valid;
+  cr_ready <= arb_grant;
+  -- bus drive
+  br_valid <= arb_grant;
+  br_addr <= cr_addr when arb_grant else (others => '0');
+  br_data <= cr_data when arb_grant else (others => '0');
+  -- bus drive
+  br_valid <= arb_grant;
+  br_addr <= cr_addr when arb_grant else (others => '0');
+  br_data <= cr_data when arb_grant else (others => '0');
+  -- bus receive
+  ct_valid <= '1' when (bt_valid = '1') and (bt_addr =
+  my_addr) else '0';
+  ct_data <= bt_data ;
+end impl;
+```
+
+#### Multilevel Bus Architecture
+We wouldn't want a single bus to connect all the clients. Instead, we would want to use a multilevel bus architecture. This is where we have a bus connecting a few clients, and then another bus connecting the buses. This is often used in a hierarchical system.
+
 
 ## Memory
 
